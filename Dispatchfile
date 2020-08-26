@@ -50,7 +50,7 @@ task:
     - gitops-git
     steps:
     - name: update-gitops-repo
-      image: mesosphere/update-gitops-repo:v1.1
+      image: mesosphere/update-gitops-repo:v1.2.0
       workingDir: /workspace/gitops-git
       args:
       - -git-revision=$(context.git.commit)
