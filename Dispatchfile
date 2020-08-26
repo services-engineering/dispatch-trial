@@ -58,17 +58,17 @@ task:
       - -scm-provider=github
  
 actions:
-- "on":
+- on:
     pull_request: {}
   tasks:
   - unit-test-simple
-- "on":
+- on:
     pull_request:
       chatops:
       - test
   tasks:
   - unit-test-simple
-- "on":
+- on:
     push:
       branches: 
       - master
