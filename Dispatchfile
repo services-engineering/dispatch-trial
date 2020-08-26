@@ -4,7 +4,7 @@ resource:
   docker-image:
     param:
       digest: $(inputs.resources.docker-image.digest)
-      url: docker.io/$YOURDOCKERUSERNAME/helloworld:$(context.build.name)
+      url: docker.io/egoodemesosphere/helloworld:$(context.build.name)
     type: image
   helloworld-git:
     param:
