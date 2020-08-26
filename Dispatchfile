@@ -36,7 +36,7 @@ task:
       - go
       - test
       - ./...
-      image: $YOURDOCKERUSERNAME/helloworld:$(context.build.name)
+      image: egoodemesosphere/helloworld:$(context.build.name)
       name: unit-test-simple
       resources: {}
       workingDir: /workspace/helloworld-git/
