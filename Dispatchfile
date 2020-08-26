@@ -4,12 +4,16 @@ resource:
   docker-image:
     param:
       digest: $(inputs.resources.docker-image.digest)
-      url: docker.io/$YOURDOCKERUSERNAME/helloworld:$(context.build.name)
+      url: docker.io/egoodemesosphere/helloworld:$(context.build.name)
     type: image
   helloworld-git:
     param:
       revision: $(context.git.commit)
       url: $(context.git.url)
+    type: git
+  gitops-git:
+    param:
+      url: https://github.com/services-engineering/cicd-hello-world-gitops
     type: git
 
 task:
@@ -36,11 +40,23 @@ task:
       - go
       - test
       - ./...
-      image: $YOURDOCKERUSERNAME/helloworld:$(context.build.name)
+      image: egoodemesosphere/helloworld:$(context.build.name)
       name: unit-test-simple
       resources: {}
       workingDir: /workspace/helloworld-git/
-
+  deploy:
+    inputs:
+    - docker-image
+    - gitops-git
+    steps:
+    - name: update-gitops-repo
+      image: mesosphere/update-gitops-repo:v1.1
+      workingDir: /workspace/gitops-git
+      args:
+      - -git-revision=$(context.git.commit)
+      - -substitutue=imageName=egoodemesosphere/helloworld@$(inputs.resources.docker-image.digest)
+      - -scm-provider=github
+ 
 actions:
 - "on":
     pull_request: {}
@@ -52,4 +68,11 @@ actions:
       - test
   tasks:
   - unit-test-simple
+- "on":
+    push:
+      branches:
+      - master
+  tasks:
+  - build
+  - deploy
 
