@@ -69,7 +69,9 @@ actions:
   tasks:
   - unit-test-simple
 - "on":
-    push_branches: master
+    push:
+      branches:
+      - master
   tasks:
   - build
   - deploy
