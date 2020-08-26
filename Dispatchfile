@@ -50,7 +50,7 @@ task:
     - gitops-git
     steps:
     - name: update-gitops-repo
-      image: mesosphere/update-gitops-repo:v1.1
+      image: mesosphere/update-gitops-repo:v1.2.0
       workingDir: /workspace/gitops-git
       args:
       - -git-revision=$(context.git.commit)
@@ -58,19 +58,19 @@ task:
       - -scm-provider=github
  
 actions:
-- "on":
+- on:
     pull_request: {}
   tasks:
   - unit-test-simple
-- "on":
+- on:
     pull_request:
       chatops:
       - test
   tasks:
   - unit-test-simple
-- "on":
+- on:
     push:
-      branches:
+      branches: 
       - master
   tasks:
   - build
