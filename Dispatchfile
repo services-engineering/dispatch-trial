@@ -70,7 +70,7 @@ actions:
   - unit-test-simple
 - "on":
     push:
-      branches:
+      branches: 
       - master
   tasks:
   - build
